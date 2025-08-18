@@ -1,5 +1,5 @@
 
-# Mini fastApi Wrapper
+# Mini FastApi Wrapper
 
 Mini Wrapper is a lightweight FastAPI application designed for speedy development. It provides a simple and efficient way to set up and run a FastAPI server with various configurations and logging capabilities.
 
