@@ -1,31 +1,28 @@
-Python Logging Wrapper
+# Python Logging Wrapper
 
 A simplified logging wrapper that automates file creation and provides structured logging with minimal setup.
-Features
 
-    ✅ Automatic log file creation and directory setup
+## 🚀 Features
 
-    ✅ Colored console output for better readability
+- ✅ **Automatic log file creation** and directory setup
+- ✅ **Colored console output** for better readability  
+- ✅ **JSON-formatted error logs** with traceback information
+- ✅ **Log rotation** with configurable size limits
+- ✅ **Environment-based configuration** using `.env` files
+- ✅ **Multiple logger instances** with different configurations
+- ✅ **100% compatible** with standard Python logging
 
-    ✅ JSON-formatted error logs with traceback information
+## 📦 Installation
 
-    ✅ Log rotation with configurable size limits
-
-    ✅ Environment-based configuration using .env files
-
-    ✅ Multiple logger instances with different configurations
-
-    ✅ 100% compatible with standard Python logging
-
-Installation
-bash
-
+```bash
 pip install colorlog pydantic-settings
+```
 
-Quick Start
-Basic Usage
-python
+## 🏃 Quick Start
 
+### Basic Usage
+
+```python
 from your_logging_module import Logger
 
 # Initialize logger (automatically reads from .env if available)
@@ -45,24 +42,27 @@ try:
     result = 10 / 0
 except Exception:
     logger.exception("Division failed")  # Auto-formatted as JSON
+```
 
-Environment Configuration
+### Environment Configuration
 
-Create a .env file in your project root:
-ini
+Create a `.env` file in your project root:
 
+```ini
 LOG_LEVEL=INFO
 LOG_FILE=logs/app.log
 ENABLE_SEVERITY_FILES=true
 MAX_LOG_SIZE_MB=10
 BACKUP_COUNT=5
+```
 
-Best Practices
-Per-Module Logging
+## 📋 Best Practices
+
+### Per-Module Logging
 
 Create a dedicated logger for each module to track message sources:
-python
 
+```python
 # In each Python file
 from your_logging_module import Logger
 
@@ -71,12 +71,13 @@ logger = logger_manager.setup_logger(logger_name=__name__)
 
 def my_function():
     logger.info("Function executed")  # Shows module name in logs
+```
 
-Class-Based Logging
+### Class-Based Logging
 
 For object-oriented code:
-python
 
+```python
 class DatabaseService:
     def __init__(self):
         self.logger = Logger().setup_logger(
@@ -90,18 +91,22 @@ class DatabaseService:
             self.logger.info("Query successful")
         except Exception:
             self.logger.exception("Query failed")  # Auto JSON formatting
+```
 
-Configuration Options
-Setting	Description	Default
-LOG_LEVEL	Minimum log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)	INFO
-LOG_FILE	Main log file path (None for console only)	None
-ENABLE_SEVERITY_FILES	Create separate files for warnings/errors/critical messages	True
-SEVERITY_FILES_DIR	Directory for severity-specific files	"logs/severity"
-MAX_LOG_SIZE_MB	Max log file size before rotation (MB)	10
-BACKUP_COUNT	Number of backup files to keep	5
-Complete Example
-python
+## ⚙️ Configuration Options
 
+| Setting | Description | Default |
+|---------|-------------|---------|
+| `LOG_LEVEL` | Minimum log level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`) | `INFO` |
+| `LOG_FILE` | Main log file path (`None` for console only) | `None` |
+| `ENABLE_SEVERITY_FILES` | Create separate files for warnings/errors/critical messages | `True` |
+| `SEVERITY_FILES_DIR` | Directory for severity-specific files | `"logs/severity"` |
+| `MAX_LOG_SIZE_MB` | Max log file size before rotation (MB) | `10` |
+| `BACKUP_COUNT` | Number of backup files to keep | `5` |
+
+## 📖 Complete Example
+
+```python
 from your_logging_module import Logger, LoggerConfig
 
 # Initialize logger manager
@@ -114,7 +119,7 @@ app_logger = logger_manager.setup_logger(
 )
 
 db_logger = logger_manager.setup_logger(
-    logger_name="app.database",
+    logger_name="app.database", 
     config=LoggerConfig(LOG_FILE="logs/db.log")
 )
 
@@ -132,12 +137,13 @@ app_logger.info("Application shutting down")
 
 # Clean up
 logger_manager.close_all_loggers()
+```
 
-Error Formatting
+## 🔍 Error Formatting
 
 Exceptions are automatically formatted as JSON with complete context:
-json
 
+```json
 {
   "error_type": "ZeroDivisionError",
   "error_message": "division by zero",
@@ -150,12 +156,13 @@ json
   "logger": "main",
   "message": "Calculation failed"
 }
+```
 
-File Structure
+## 📁 File Structure
 
 The wrapper automatically creates this directory structure:
-text
 
+```
 logs/
 ├── app.log                 # Main application log
 ├── complete_log.log        # All messages from all loggers
@@ -163,12 +170,13 @@ logs/
     ├── warning.log        # WARNING messages
     ├── error.log          # ERROR messages
     └── critical.log       # CRITICAL messages
+```
 
-Migration from Standard Logging
+## 🔄 Migration from Standard Logging
 
 If you're already using Python's logging:
-python
 
+```python
 # Before (standard logging)
 import logging
 logging.basicConfig(level=logging.INFO, filename='app.log')
@@ -185,23 +193,24 @@ logger = logger_manager.setup_logger(
 # All existing logging calls work exactly the same
 logger.info("This works like before")
 logger.error("But now with added benefits!")
+```
 
-Benefits
+## 🎯 Benefits
 
-    Automatic Setup - No manual file/directory creation needed
+- **Automatic Setup** - No manual file/directory creation needed
+- **Structured Errors** - JSON-formatted exceptions with full context  
+- **Visual Differentiation** - Colored console output
+- **Flexible Configuration** - Environment variables or programmatic setup
+- **Standard Compatible** - Works with existing logging code
 
-    Structured Errors - JSON-formatted exceptions with full context
+## 🛠️ Troubleshooting
 
-    Visual Differentiation - Colored console output
+**Log files not created?** Check write permissions to the log directory.
 
-    Flexible Configuration - Environment variables or programmatic setup
+**No colors in console?** Ensure you're running in a terminal that supports ANSI colors.
 
-    Standard Compatible - Works with existing logging code
+**Missing logs?** Verify your `LOG_LEVEL` setting isn't filtering out messages.
 
-Troubleshooting
+---
 
-Log files not created? Check write permissions to the log directory.
-
-No colors in console? Ensure you're running in a terminal that supports ANSI colors.
-
-Missing logs? Verify your LOG_LEVEL setting isn't filtering out messages.
+> **Note:** Replace `your_logging_module` with your actual module name in the import statements.
